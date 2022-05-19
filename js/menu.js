@@ -12,9 +12,11 @@ let slideMenu = ({ openBtn, menu, classActiveMenu, closeTrigger }) => {
   const navigation = document.querySelector(menu);
   const navigationClose = document.querySelectorAll(closeTrigger);
 
+/* Больше закрытие по крестику как отдельное событие не нужно
   burgerBtn.addEventListener('click', () => {
     openMenu(navigation, classActiveMenu);
   });
+ */
 
   navigationClose.forEach(item => {
     item.addEventListener('click', () => {
@@ -29,14 +31,20 @@ let slideMenu = ({ openBtn, menu, classActiveMenu, closeTrigger }) => {
     }
   });
 
-/* Не разобрался, как сделать закрытие на пустое место
-  navigation.addEventListener('click', (e) => {
-    if (e.target === navigation) {
+  // Закрытие меню при клике на пустоту и закрытие по крестику
+  document.addEventListener('click', (e) => {
+    if (e.target.closest(openBtn))  {
+      openMenu(navigation, classActiveMenu);
+      //console.log('Открыть меню');
+    } else if (e.target.closest(menu) == null && navigation.classList.contains(classActiveMenu)) {
       closeMenu(navigation, classActiveMenu);
-      console.log(e.target);
-    }
+      //console.log('Закрыть меню');
+    } /* else if (e.target.closest(menu) == null && navigation.classList.contains(classActiveMenu) == false) {
+      console.log('Ничего');
+    } */ /* else if (e.target.closest(menu) && navigation.classList.contains(classActiveMenu)) {
+      console.log('Это меню');
+    } */
   });
-   */
 };
 
 export default slideMenu;
